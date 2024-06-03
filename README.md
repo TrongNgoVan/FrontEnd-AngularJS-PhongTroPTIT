@@ -42,11 +42,13 @@ Website được phát triển bằng Spring Boot và Angular.
 ## Hướng dẫn cài đặt và sử dụng
 
 ### Yêu cầu
-
-- Angular CLI
+- Java Development Kit (JDK) 8+
 - Node.js và npm
-- Visual Studio Code (hoặc IDE khác hỗ trợ Angular)
-
+- Angular CLI
+-  Visual Studio Code (hoặc IDE khác hỗ trợ Angular)
+- MySQL Workbench
+- IntelliJ IDEA (hoặc IDE khác hỗ trợ Spring Boot)
+- 
 ### Khởi tạo dự án Angular
 
 1. Truy cập [Angular CLI](https://cli.angular.io/) để cài đặt Angular Command Line Interface (CLI), một công cụ giúp tạo và quản lý dự án Angular.
