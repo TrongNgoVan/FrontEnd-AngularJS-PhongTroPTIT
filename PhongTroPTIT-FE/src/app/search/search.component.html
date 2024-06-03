@@ -1,0 +1,109 @@
+<div class="container black">
+  <div class="row">
+    <div class="col-lg-12- col-xl-12">
+      <div class="row searchform">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+          <h4><strong>Tìm kiếm nhanh</strong></h4>
+          <hr>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6 col-12 search-detail-district" [ngClass]="{'offBorder': innerWidth<576}">
+          <h6>Chọn quận</h6>
+          <select class="browser-default custom-select" [(ngModel)]="searchForm.idDistrict">
+            <option [ngValue]="undefined" selected>Quận</option>
+            <option *ngFor="let districtDTO of districtDTOs" [value]=districtDTO.id
+                    ngDefaultControl>{{districtDTO.name}}</option>
+          </select>
+        </div>
+        <div class="col-lg-3 col-xl-3 col-sm-6 col-12 search-detail-type" [ngClass]="{'offBorder': innerWidth<992}">
+          <h6>Chọn loại phòng</h6>
+          <!-- Default inline 1-->
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" id="defaultInline1" name="inlineDefaultRadiosExample"
+                   [value]="1" [(ngModel)]="searchForm.motel" mdbInput>
+            <label class="custom-control-label" for="defaultInline1">Phòng trọ, nhà trọ</label>
+          </div>
+          <!-- Default inline 2-->
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" id="defaultInline2" name="inlineDefaultRadiosExample"
+                   [value]="2" [(ngModel)]="searchForm.motel" mdbInput>
+            <label class="custom-control-label" for="defaultInline2">Nhà nguyên căn</label>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12 search-detail-price"
+             [ngClass]="{'offBorder': innerWidth<576}">
+          <h6>Chọn khoảng giá</h6>
+          <ng5-slider [(value)]="searchForm.priceStart" [(highValue)]="searchForm.priceEnd"
+                      [options]="priceOptions"></ng5-slider>
+          <div class="row">
+            <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+              <div class="row">
+                <div class="input-group mb-3 my-3">
+                  <input appNumberOnly type="text" class="form-control" aria-describedby="priceMin"
+                         [(ngModel)]="searchForm.priceStart">
+                  <div class="input-group-append">
+                    <span class="input-group-text" id="priceMin">triệu</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 my-3" id="priceTo">
+              <div class="text-center">_</div>
+            </div>
+            <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+              <div class="row">
+                <div class="input-group mb-3 my-3">
+                  <input appNumberOnly type="text" class="form-control" aria-describedby="priceMax"
+                         [(ngModel)]="searchForm.priceEnd">
+                  <div class="input-group-append">
+                    <span class="input-group-text" id="priceMax">triệu</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12 search-detail-acreage">
+          <h6>Chọn diện tích</h6>
+          <ng5-slider [(value)]="searchForm.acreageStart" [(highValue)]="searchForm.acreageEnd"
+                      [options]="acreageOptions"></ng5-slider>
+          <div class="row">
+            <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+              <div class="row">
+                <div class="input-group mb-3 my-3">
+                  <!--<input type="number" step="{{priceOptions.step}}" [(ngModel)]="minValue"-->
+                  <input appNumberOnly type="text" class="form-control" aria-describedby="acreageMin"
+                         [(ngModel)]="searchForm.acreageStart">
+                  <div class="input-group-append">
+                    <span class="input-group-text" id="acreageMin">m²</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 my-3" id="acreageTo">
+              <div class="text-center">_</div>
+            </div>
+            <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+              <div class="row">
+                <div class="input-group mb-3 my-3">
+                  <input appNumberOnly type="text" class="form-control" aria-describedby="acreageMax"
+                         [(ngModel)]="searchForm.acreageEnd">
+                  <div class="input-group-append">
+                    <span class="input-group-text" id="acreageMax">m²</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-12 col-sm-12">
+        <div class="text-center searchBtn">
+          <button type="button" class="btn btnSearch" (click)="navigateToSearchPage()" mdbWavesEffect>Tìm kiếm</button>
+          <button type="button" class="btn btnSearch" (click)="openSearchMaps()">Google Maps</button>
+        </div>
+      </div>
+
+    </div>
+    <!--</div>-->
+  </div>
+</div>

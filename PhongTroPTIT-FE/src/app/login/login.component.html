@@ -1,0 +1,46 @@
+<form (ngSubmit)="submitLogin(signIn)" #signIn="ngForm">
+  <div class="row" style="padding-left: 8px; padding-right: 8px;">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+      <button type="button" class="close" (click)="close()">&times;</button>
+      <div class="text-center">
+        <p class="welcome">Chào mừng trở lại</p>
+      </div>
+    </div>
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+      <p class="username">Email <span *ngIf="(signIn.submitted && !user.email)"
+                                      class="error"> - Thông tin này là bắt buộc</span>
+        <span class="error"
+              *ngIf="signIn.submitted && email.errors?.pattern"> - Vui lòng nhập chính xác định dạng email</span>
+      </p>
+      <input type="email" class="form-control" id="email" required pattern=".+@.+\..+"
+               [(ngModel)]="user.email" name="email" #email="ngModel" appAutofocus="true"
+             (keydown.space)="$event.preventDefault();"
+             [ngClass]="{ 'is-invalid': (signIn.submitted && email.invalid) || (signIn.submitted && email.errors?.pattern)}">
+    </div>
+
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+      <p class="pass">Mật khẩu <span *ngIf="signIn.submitted && passwordSignIn.invalid" class="error"> - Thông tin này là bắt buộc</span>
+      </p>
+      <input type="password" class="form-control" id="passwordSignIn" required
+             [(ngModel)]="user.password" name="passwordSignIn" #passwordSignIn="ngModel"
+             [ngClass]="{ 'is-invalid': signIn.submitted && passwordSignIn.invalid}">
+    </div>
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" *ngIf="wrongAccount">
+      <p class="error" style="margin-bottom: 0px!important;">Sai thông tin tài khoản</p>
+    </div>
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" *ngIf="blockAccount">
+      <p class="error" style="margin-bottom: 0px!important;">Tài khoản đã bị khóa</p>
+    </div>
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 text-center">
+      <button name="login" class="btnLogin" mdbWavesEffect [disabled]="disableSubmit" (click)="submitLogin(signIn)">
+        <span *ngIf="showLoadding" class="spinner-border spinner-border-sm"></span> Đăng nhập
+      </button>
+    </div>
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+      <p class="register">Tạo tài khoản? <span><button type="button" id="register" name="register" mdbWavesEffect
+                                                       (click)="submitRegister()">Đăng ký</button></span>
+      </p>
+    </div>
+  </div>
+</form>
+

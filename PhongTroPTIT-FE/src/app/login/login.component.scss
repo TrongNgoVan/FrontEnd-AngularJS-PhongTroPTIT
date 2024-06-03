@@ -1,0 +1,125 @@
+.username, .pass, .display_name, .phone, .address, .email {
+  margin-bottom: 3px;
+  font-weight: 500;
+  margin-top: 5px;
+}
+
+.welcome {
+  font-size: 25px;
+  font-weight: 400;
+}
+
+.close {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  margin-top: -15px;
+  margin-right: -5px;
+}
+
+.form-control {
+  height: 40px;
+  margin-bottom: 10px;
+}
+
+#form-password {
+  margin-bottom: 0px !important;
+}
+
+.btnLogin {
+  background: #0db9f0;
+  border: none;
+  color: white;
+  font-size: 18px;
+  width: 100%;
+  padding: 10px 0;
+  margin-bottom: 1px;
+}
+
+.error {
+  color: #dc3545;
+  font-weight: 400;
+}
+
+.forgot {
+  color: #0db9f0 !important;
+  font-weight: 400;
+  padding: 0 !important;
+  font-size: 15px;
+  margin-top: 1px;
+  margin-bottom: 5px;
+}
+
+.forgot:hover, .already:hover {
+  text-decoration: underline !important;
+}
+
+.forgot:focus, .already:focus {
+  outline: none;
+}
+
+#register {
+  color: #0db9f0 !important;
+  font-weight: 400;
+  padding: 0 !important;
+  font-size: 15px;
+  margin-top: 0px;
+  margin-bottom: 10px;
+}
+
+#register:hover {
+  text-decoration: underline !important;
+}
+
+#register:focus {
+  outline: none;
+}
+
+.register {
+  font-size: 15px;
+  margin-bottom: 0;
+}
+
+p .register {
+  margin-bottom: 0px !important;
+}
+
+.already {
+  margin-top: 3px
+}
+
+button {
+  margin-top: 5px;
+  background: transparent;
+  border: white 1px solid;
+  border-radius: 5px;
+  color: #003352;
+  font-weight: bold;
+}
+
+#register {
+  margin-bottom: 0px;
+}
+
+.is-invalid {
+  background-image: none;
+}
+
+button:disabled,
+button[disabled] {
+  border: 1px solid #0db9f0;
+  background-color: #cccccc;
+  color: #666666;
+  cursor: not-allowed;
+  pointer-events: all !important;
+  opacity: 0.65;
+}
+
+button:disabled:hover {
+  background: #0db9f0;
+  color: white;
+}
+
+.btnLogin:focus {
+  outline: none;
+}

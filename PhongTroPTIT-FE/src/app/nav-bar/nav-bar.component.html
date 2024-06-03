@@ -1,0 +1,154 @@
+<!--Navbar-->
+<div class="container-fluid nav-color">
+  <mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark " [containerInside]="true">
+    <!-- Navbar brand -->
+    <mdb-navbar-brand><a class="navbar-brand" routerLink="/home">
+      <i class="fas fa-map-marker-alt icon-marker"></i>
+      PhòngTrọPTIT</a>
+    </mdb-navbar-brand>
+    <!-- Collapsible content -->
+    <links>
+      <!-- Links -->
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item ">
+          <a class="nav-link waves-light" routerLink="/home" mdbWavesEffect>Trang chủ</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link waves-light" [routerLink]="['/motel']" [queryParams]="{page: 1}" mdbWavesEffect>Phòng
+            trọ</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link waves-light" [routerLink]="['/house']" [queryParams]="{page: 1}" mdbWavesEffect>Nhà nguyên
+            căn</a>
+        </li>
+      </ul>
+      <!-- Links -->
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <button type="button" color="default" mdbWavesEffect (click)="navigateToCreatePost()"><i
+            class="far fa-edit"></i>Đăng tin mới
+          </button>
+        </li>
+        <li class="nav-item dropdown" *ngIf="user; else notLoggedIn" dropdown>
+          <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+            <mdb-icon fas icon="user"></mdb-icon>
+            {{user.fullName}}<span class="caret"></span></a>
+          <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
+            <a class="dropdown-item waves-light" mdbWavesEffect (click)="navigateToUser(user.id)">Tài khoản</a>
+            <a class="dropdown-item waves-light" mdbWavesEffect routerLink="/logout">Đăng xuất</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown" *ngIf="user" dropdown>
+          <a dropdownToggle mdbWavesEffect type="button" class="nav-link waves-light" mdbWavesEffect>
+            <i class="fas fa-bell" [ngStyle]="{'color':noti?'#0db9f0':'white'}"></i></a>
+          <div *dropdownMenu class="dropdown-menu dropdown-primary dropdown-menu-right"
+               style="width: 400px; padding: 0px; max-height: 422px" role="menu">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+              <div class="row border-bottom">
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
+                  <p id="notification">Thông báo</p>
+                </div>
+                <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-8">
+                  <div class="d-flex justify-content-end">
+                    <button class="btnSetting" routerLink="/notification">Cài đặt nhận thông báo</button>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="showLoadding" class="text-center">
+                <span class="spinner-border spinner-border-sm"></span>
+              </div>
+              <div class="row border-bottom">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                  <p id="nothingNoti" *ngIf="totalElements === 0">Không có thông báo</p>
+                </div>
+              </div>
+              <div *ngIf="totalElements > 0">
+                <a style="padding: 0px!important;" *ngFor="let notificationDTO of notificationDTOs"
+                   (click)="navigateToDetail(notificationDTO.postDTO); seen(notificationDTO);">
+                  <div id="inf" class="row border-bottom"
+                       [ngStyle]="{'background-color': (notificationDTO.seen)?'#FFFFFF':'#EDF2FA'}">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                      <div class="avatar">
+                        <img id="avatarUser" *ngIf="notificationDTO.notificationName === notiName.NOTIFICATION && notificationDTO.postDTO.userDTO.b64"
+                             [src]="notificationDTO.postDTO.userDTO.b64 | appSafeHtml">
+                        <img id="avatarUserNull" *ngIf="notificationDTO.notificationName === notiName.NOTIFICATION && !notificationDTO.postDTO.userDTO.b64"
+                             [src]="'assets/avatar.svg'">
+                        <img id="approve" *ngIf="notificationDTO.notificationName === notiName.APPROVE"
+                             [src]="'assets/success.png'">
+                        <img id="block" *ngIf="notificationDTO.notificationName === notiName.BLOCK"
+                             [src]="'assets/cancel.png'">
+                      </div>
+                      <div class="information">
+                        <div class="row">
+                          <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
+                            <div *ngIf="notificationDTO.notificationName === notiName.NOTIFICATION">
+                              <p class="name">{{notificationDTO.postDTO.userDTO.fullName}}
+                                <span class="more"> đăng một tin mới </span>
+                                {{notificationDTO.postDTO.title | truncate:[35]}}
+                              </p>
+                            </div>
+                            <div *ngIf="notificationDTO.notificationName === notiName.APPROVE">
+                              <p class="name">Kiểm duyệt viên
+                                <span class="more"> đã duyệt </span>
+                                {{notificationDTO.postDTO.title | truncate:[40]}}
+                              </p>
+                            </div>
+                            <div *ngIf="notificationDTO.notificationName === notiName.BLOCK">
+                              <p class="name">Kiểm duyệt viên
+                                <span class="more"> đã khóa </span>
+                                {{notificationDTO.postDTO.title | truncate:[40]}}
+                              </p>
+                            </div>
+                            <p class="time"
+                               *ngIf="notificationDTO.unit === 'phút'">{{notificationDTO.createAt}} {{notificationDTO.unit}}
+                              trước</p>
+                            <p class="time"
+                               *ngIf="notificationDTO.unit === 'giờ'">{{notificationDTO.createAt}} {{notificationDTO.unit}}
+                              trước</p>
+                            <p class="time"
+                               *ngIf="notificationDTO.unit === 'ngày'">{{notificationDTO.createAt}} {{notificationDTO.unit}}
+                              trước</p>
+                            <p class="time"
+                               *ngIf="notificationDTO.unit === 'tháng'">{{notificationDTO.createAt}} {{notificationDTO.unit}}
+                              trước</p>
+                            <p class="time"
+                               *ngIf="notificationDTO.unit === 'năm'">{{notificationDTO.createAt}} {{notificationDTO.unit}}
+                              trước</p>
+                          </div>
+                          <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+                            <div class="row">
+                              <img id="imgPost" [src]="notificationDTO.postDTO.imageStrings[0]">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+              <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                  <div class="text-center">
+                    <button class="btnSeemore" routerLink="/notification">Xem thêm</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <!--</div>-->
+        <ng-template #notLoggedIn>
+          <li class="nav-item">
+            <!--<a class="nav-link waves-light" mdbWavesEffect (click)="showSignup=true; signUp.resetForm()">Đăng ký</a>-->
+            <a class="nav-link waves-light" mdbWavesEffect (click)="register()">Đăng ký</a>
+          </li>
+          <li class="nav-item">
+            <!--<a class="nav-link waves-light" mdbWavesEffect (click)="showModal=true; signIn.resetForm()">Đăng nhập</a>-->
+            <a class="nav-link waves-light" mdbWavesEffect (click)="login()">Đăng nhập</a>
+          </li>
+        </ng-template>
+      </ul>
+    </links>
+  </mdb-navbar>
+  <!--/.Navbar-->
+</div>

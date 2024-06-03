@@ -1,0 +1,52 @@
+<form (ngSubmit)="changePass.form.valid && submit()" #changePass="ngForm">
+  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+    <button type="button" class="close" (click)="close()">&times;</button>
+    <div class="text-center">
+      <p class="welcome">Thay đổi mật khẩu</p>
+    </div>
+  </div>
+  <div class="row" style="padding-left: 8px; padding-right: 8px;" *ngIf="!success; else successChangePassword">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+      <p class="pass">Mật khẩu hiện tại <span *ngIf="changePass.submitted && oldPassword.invalid" class="error"> - Thông tin này là bắt buộc</span>
+        <span *ngIf="wrongPass" class="error"> - Mật khẩu không chính xác</span>
+      </p>
+    </div>
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+      <input type="password" class="form-control" id="oldPassword" required
+             [(ngModel)]="oldPasswordText" name="oldPassword" #oldPassword="ngModel"
+             [ngClass]="{ 'is-invalid': changePass.submitted && oldPassword.invalid}">
+    </div>
+
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+      <p class="pass">Mật khẩu mới <span *ngIf="changePass.submitted && newPassword.invalid" class="error"> - Thông tin này là bắt buộc</span>
+      </p>
+    </div>
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+      <input type="password" class="form-control" id="newPassword" required
+             [(ngModel)]="newPasswordText" name="newPassword" #newPassword="ngModel"
+             [ngClass]="{ 'is-invalid': changePass.submitted && newPassword.invalid}">
+    </div>
+
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+      <p class="pass">Xác nhận mật khẩu <span *ngIf="changePass.submitted && confirmNewPassword.invalid" class="error"> - Thông tin này là bắt buộc</span>
+      </p>
+    </div>
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+      <input type="password" class="form-control" id="confirmNewPassword" required
+             [(ngModel)]="confirmNewPasswordText" name="confirmNewPassword" #confirmNewPassword="ngModel"
+             [ngClass]="{ 'is-invalid': changePass.submitted && confirmNewPassword.invalid}">
+    </div>
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" *ngIf="errorConfirm">
+      <p class="error"  style="margin-bottom: 0px!important;">Vui lòng xác nhận lại mật khẩu</p>
+    </div>
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 text-center">
+      <button name="register" class="btnRegister" [disabled]="disableSubmit" mdbWavesEffect>
+        <span *ngIf="loading" class="spinner-border spinner-border-sm"></span> Chấp nhận</button>
+    </div>
+  </div>
+  <ng-template #successChangePassword>
+    <div class="text-center">
+      <h5>Thay đổi mật khẩu thành công </h5>
+    </div>
+  </ng-template>
+</form>

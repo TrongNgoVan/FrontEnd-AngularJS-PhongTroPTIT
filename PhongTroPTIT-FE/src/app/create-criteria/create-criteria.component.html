@@ -1,0 +1,116 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12- col-xl-12">
+      <form (ngSubmit)="create.form.valid && createCriteria()" #create="ngForm">
+        <div class="row searchform">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+            <button type="button" class="close" (click)="close()">&times;</button>
+            <h4 style="font-weight: 500;">Thêm tiêu chí mới</h4>
+            <hr>
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-6 col-12 search-detail-district"
+               [ngClass]="{'offBorder': innerWidth<576}">
+            <h6>Chọn quận <span *ngIf="create.submitted && district.invalid" class="error"> - Bắt buộc</span></h6>
+            <select class="browser-default custom-select" id="district" required
+                    [(ngModel)]="criteriaDTO.districtDTO.id" name="district" #district="ngModel">
+              <option [ngValue]="undefined" selected>Quận</option>
+              <option *ngFor="let districtDTO of districtDTOs" [value]=districtDTO.id
+                      ngDefaultControl>{{districtDTO.name}}</option>
+            </select>
+          </div>
+          <div class="col-lg-3 col-xl-3 col-sm-6 col-12 search-detail-type" [ngClass]="{'offBorder': innerWidth<992}">
+            <h6>Chọn loại <span *ngIf="create.submitted && motelRadio.invalid" class="error"> - Bắt buộc</span></h6>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" class="custom-control-input" id="defaultInline1"
+                     required name="motelRadio" #motelRadio="ngModel"
+                     [value]="1" [(ngModel)]="motel" mdbInput>
+              <label class="custom-control-label" for="defaultInline1">Phòng trọ, nhà trọ</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" class="custom-control-input" id="defaultInline2"
+                     required name="motelRadio" #motelRadio="ngModel"
+                     [value]="2" [(ngModel)]="motel" mdbInput>
+              <label class="custom-control-label" for="defaultInline2">Nhà nguyên căn</label>
+            </div>
+          </div>
+          <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12 search-detail-price"
+               [ngClass]="{'offBorder': innerWidth<576}">
+            <h6>Chọn giá <span *ngIf="create.submitted && (priceStart.invalid || priceEnd.invalid)" class="error"> - Bắt buộc</span></h6>
+            <ng5-slider [(value)]="criteriaDTO.priceStart" [(highValue)]="criteriaDTO.priceEnd"
+                        [options]="priceOptions"></ng5-slider>
+            <div class="row">
+              <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+                <div class="row">
+                  <div class="input-group mb-3 my-3">
+                    <input appNumberOnly type="text" class="form-control" aria-describedby="priceMin"
+                           id="priceStart" required name="priceStart" #priceStart="ngModel"
+                           [(ngModel)]="criteriaDTO.priceStart">
+                    <div class="input-group-append">
+                      <span class="input-group-text" id="priceMin">triệu</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 my-3" id="priceTo">
+                <div class="text-center">_</div>
+              </div>
+              <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+                <div class="row">
+                  <div class="input-group mb-3 my-3">
+                    <input appNumberOnly type="text" class="form-control" aria-describedby="priceMax"
+                           id="priceEnd" required name="priceEnd" #priceEnd="ngModel"
+                           [(ngModel)]="criteriaDTO.priceEnd">
+                    <div class="input-group-append">
+                      <span class="input-group-text" id="priceMax">triệu</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12 search-detail-acreage">
+            <h6>Chọn diện tích <span *ngIf="create.submitted && (acreageStart.invalid || acreageEnd.invalid)" class="error"> - Bắt buộc</span></h6>
+            <ng5-slider [(value)]="criteriaDTO.acreageStart" [(highValue)]="criteriaDTO.acreageEnd"
+                        [options]="acreageOptions"></ng5-slider>
+            <div class="row">
+              <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+                <div class="row">
+                  <div class="input-group mb-3 my-3">
+                    <input appNumberOnly type="text" class="form-control" aria-describedby="acreageMin"
+                           id="acreageStart" required name="acreageStart" #acreageStart="ngModel"
+                           [(ngModel)]="criteriaDTO.acreageStart">
+                    <div class="input-group-append">
+                      <span class="input-group-text" id="acreageMin">m²</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 my-3" id="acreageTo">
+                <div class="text-center">_</div>
+              </div>
+              <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+                <div class="row">
+                  <div class="input-group mb-3 my-3">
+                    <input appNumberOnly type="text" class="form-control" aria-describedby="acreageMax"
+                           id="acreageEnd" required name="acreageEnd"  #acreageEnd="ngModel"
+                           [(ngModel)]="criteriaDTO.acreageEnd">
+                    <div class="input-group-append">
+                      <span class="input-group-text" id="acreageMax">m²</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12 col-sm-12">
+          <div class="text-center">
+            <button class="btn btnSearch" mdbWavesEffect [disabled]="showLoadding">
+              <span *ngIf="showLoadding" class="spinner-border spinner-border-sm"></span>Thêm</button>
+            <button type="button" class="btn btn-danger btnSearch" mdbWavesEffect (click)="close()">Đóng</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

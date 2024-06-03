@@ -1,0 +1,113 @@
+.background {
+  padding-top: 50px;
+}
+
+.close {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  margin-top: -15px;
+  margin-right: -5px;
+}
+
+.black {
+  background-color: #E9ECEF !important;
+}
+
+.text-center h1 {
+  font-weight: 400;
+}
+
+.mat-tab-label {
+  font-weight: bold;
+  opacity: 1;
+}
+
+.mat-tab-body-content {
+  overflow: hidden !important;
+}
+
+.searchform {
+  font-weight: 400;
+}
+
+.search-detail-district, .search-detail-type, .search-detail-price {
+  border-right: #2e333954 1px solid;
+  padding: 5px 30px;
+}
+
+.search-detail-acreage {
+  padding: 5px 30px;
+}
+
+.searchform h6 {
+  font-weight: bold;
+}
+
+#priceTo, #acreageTo, #priceTo2, #acreageTo2 {
+  padding: 0;
+}
+
+.form-control {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+input.form-control {
+  font-size: 14px;
+}
+
+.input-group-text {
+  font-size: 14px;
+}
+
+input.radius, #radius {
+  font-size: 1rem;
+}
+
+agm-map {
+  height: 300px;
+}
+
+.btnSearch {
+  background: #009BF9;
+  font-weight: 600;
+  font-size: 15px;
+  border: none !important;
+}
+
+.ng5-slider {
+  margin-top: 10px !important;
+  background-color: black !important;
+}
+
+.offBorder {
+  border-right: none;
+}
+
+.backdrop {
+  background-color: rgba(0, 0, 0, 0.6);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+}
+
+.modal-content {
+  overflow-y: auto;
+  max-height: 100vh;
+}
+
+.modal-title {
+  font-weight: bold;
+}
+
+#address {
+  font-weight: bold;
+}
+
+.error {
+  color: #dc3545;
+  font-weight: 400;
+}

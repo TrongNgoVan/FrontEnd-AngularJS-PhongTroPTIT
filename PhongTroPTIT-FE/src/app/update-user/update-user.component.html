@@ -1,0 +1,61 @@
+<form (ngSubmit)="signUp.form.valid && submit()" #signUp="ngForm">
+  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+    <button type="button" class="close" (click)="close()">&times;</button>
+    <div class="text-center">
+      <p class="welcome">Cập nhật thông tin</p>
+    </div>
+  </div>
+  <div class="row" style="padding-left: 8px; padding-right: 8px;">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+      <p class="username">Ảnh đại diện</p>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
+      <div class="text-center">
+        <div class="avatar-upload">
+          <div class="avatar-edit">
+            <input type='file' id="imageUpload" ng2FileSelect [uploader]="uploader" (onFileSelected)="changeUploader()" accept="image/*"/>
+            <label for="imageUpload"><i class="fas fa-pencil-alt"></i></label>
+          </div>
+          <div class="avatar-preview">
+            <!--<div id="imagePreview1" *ngIf="uploader.queue.length === 0" [style.background-image]="'url(' + urlAvatar + ')'"></div>-->
+            <img id="imagePreview1" *ngIf="uploader.queue.length === 0" style="width: 125px; height: 125px; border-radius: 100%;" [src]="urlAvatar | appSafeHtml" class="media-object"/>
+            <img id="imagePreview" *ngIf="uploader.queue.length > 0" appMediaPreview [image]="uploader.queue[0]._file" class="media-object"/>
+            <!--<div id="imagePreview1" *ngIf="uploader.queue.length > 0" [style.background-image]="'url(' + 'data:image/jpeg' + ';base64,' + uploader.queue[0]._file + ')'"></div>-->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-7 col-lg-7 col-md-7 col-sm-7 col-7">
+      <div class="right d-flex align-items-center">
+        <button type="button" id="btnXoaAvatar" (click)="deleteAvatar()" mdbWavesEffect>Xóa ảnh đại diện</button>
+      </div>
+    </div>
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+      <p class="username">Họ tên<span *ngIf="signUp.submitted && username.invalid" class="error"> - Thông tin này là bắt buộc</span>
+      </p>
+    </div>
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+      <input type="text" class="form-control" id="username" required
+             [(ngModel)]="user.fullName" name="username" #username="ngModel"
+             [ngClass]="{ 'is-invalid': signUp.submitted && username.invalid}">
+    </div>
+
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+      <p class="username">Số điện thoại</p>
+    </div>
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+      <input type="text" name="phone" class="form-control" [(ngModel)]="user.phone">
+    </div>
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+      <p class="username">Địa chỉ</p>
+    </div>
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+      <input type="text" name="address" class="form-control" [(ngModel)]="user.address">
+    </div>
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 text-center">
+      <button name="register" class="btnRegister" [disabled]="disableSubmit" mdbWavesEffect>
+        <span *ngIf="loading" class="spinner-border spinner-border-sm"></span> Cập nhật
+      </button>
+    </div>
+  </div>
+</form>

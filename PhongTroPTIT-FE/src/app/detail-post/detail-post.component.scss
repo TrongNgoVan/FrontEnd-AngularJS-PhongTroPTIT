@@ -1,0 +1,328 @@
+.space {
+  margin-top: 10px;
+}
+
+.bc {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+
+ol.breadcrumb {
+  margin-right: -14px;
+}
+
+.post-summary {
+  margin-bottom: 10px;
+}
+
+.post-summary p {
+  margin-bottom: 0px;
+  font-size: 14px;
+}
+
+#tenbaiviet {
+  font-weight: 500;
+}
+
+.padding {
+  padding-left: 13px;
+}
+
+#diachi, #dientich, #giatien, #toilet, #status, #giadien, #gianuoc, #capnhat, #motel, #tienich, #thongtinchung {
+  padding: 8px;
+  font-weight: 500;
+}
+
+.background-color {
+  border-bottom: 1px solid white;
+  background: #E9ECEF;
+}
+
+.content {
+  border: 1px solid #E9ECEF;
+  border-bottom: 1px solid white;
+  border-left: none;
+  //padding: 8px;
+  //font-weight: 400;
+}
+
+
+#chitietdiachi, #chitietdientich, #chitietgiatien, #chitiettoilet, #chitiettoilet1, #chitiettoilet2, #chitietstatus, #chitietstatus2, #chitietgiadien, #chitietgiadien2, #chitietgianuoc, #chitietgianuoc2, #chitietcapnhat, #chitietmotel, #chitietmotel2, #chitiettienich {
+  padding: 8px;
+  font-weight: 400;
+}
+
+#chitietdientich {
+  color: #C90927;
+}
+
+#chitietgiatien {
+  color: #C90927;
+}
+
+.tienich {
+  border: 1px solid #E9ECEF;
+  background: #ECF0F1;
+}
+
+.tienich-content {
+  border: 1px solid #E9ECEF;
+}
+
+.thongtinchung {
+  border-bottom: 1px solid white;
+  background: #EEEEEE;
+}
+
+.thongtinchungchitiet {
+  background: #EEEEEE;
+  border-bottom: 1px solid white;
+}
+
+.thongtinlienlac {
+  border-top: 1px solid #EEEEEE;
+  border-bottom: 1px solid #EEEEEE;
+  padding-top: 10px;
+  margin-bottom: 10px;
+  margin-right: -14px;
+}
+
+#thongtinlienlac {
+  font-weight: 500;
+}
+
+#hoten {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+#hoten:hover {
+  color: red;
+}
+
+#address {
+  margin-bottom: 0px;
+  font-weight: 400;
+}
+
+#sdt {
+  font-size: 20px;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #33A837;
+}
+
+#hinhanh, #map {
+  font-weight: 500;
+  padding: 0 23px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.hinhanh, .map {
+  border: 1px solid #E9ECEF;
+  margin-right: -14px;
+  margin-left: -1px;
+  background: #E9ECEF;
+  border-bottom: 1px solid white;
+}
+
+.chitiethinhanh, .chitietmap {
+  border: 1px solid #E9ECEF;
+  margin-right: -14px;
+  margin-left: -1px;
+  margin-bottom: 10px;
+}
+
+.thongtinchitiet {
+  border: 1px solid #E9ECEF;
+  margin-right: -14px;
+  margin-left: -1px;
+  background: #E9ECEF;
+}
+
+.thongtinchitiet-content {
+  font-weight: 400;
+  border: 1px solid #E9ECEF;
+  margin-right: -14px;
+  margin-left: -1px;
+  margin-bottom: 10px;
+  padding: 5px 23px;
+}
+
+#thongtinchitiet {
+  font-weight: 500;
+  padding: 0 23px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+agm-map {
+  height: 400px;
+}
+
+.binhluan {
+  border: 1px solid #E9ECEF;
+  margin-right: -14px;
+  margin-left: -1px;
+  background: #E9ECEF;
+}
+
+#binhluan {
+  font-weight: 500;
+  padding: 0 23px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.binhluan-content, .khung-binhluan {
+  border: 1px solid #E9ECEF;
+  margin-right: -14px;
+  margin-left: -1px;
+  margin-bottom: 10px;
+  padding: 5px 23px;
+}
+
+.ten:hover {
+  text-decoration: underline;
+}
+
+.ten {
+  margin-bottom: 3px;
+  color: #212121 !important;
+  font-weight: 500;
+  font-size: 17px;
+  width: fit-content;
+}
+
+.noidung {
+  margin-bottom: 3px;
+  font-weight: 400;
+  margin-top: 7px;
+  color: #383838;
+}
+
+.gio {
+  font-size: 12px;
+  margin-bottom: 2px;
+}
+
+#comment {
+  margin-bottom: 5px;
+}
+
+.btnPost {
+  background: #0db9f0;
+  border: none;
+  color: white;
+  font-size: 18px;
+  padding: 5px 10px 3px 10px;
+  margin-bottom: 10px;
+}
+
+.btnPost button:disabled,
+.btnPost button[disabled] {
+  cursor: not-allowed !important;
+  pointer-events: all !important;
+  opacity: 0.65;
+}
+
+button {
+  background: transparent;
+  border: white 1px solid;
+  border-radius: 5px;
+  color: #003352;
+  font-weight: bold;
+}
+
+#btnUpdate {
+  color: #0db9f0 !important;
+  font-weight: 500;
+  padding: 0 !important;
+  font-size: 15px;
+  margin-top: 10px;
+}
+
+#btnUpdate:hover {
+  text-decoration: underline !important;
+}
+
+button:disabled,
+button[disabled] {
+  cursor: not-allowed !important;
+  pointer-events: all !important;
+  opacity: 0.65;
+}
+
+#avatarUser {
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.name {
+  width: auto;
+  display: inline;
+}
+
+.avatar {
+  display: inline;
+  float: left;
+  border-radius: 50%;
+}
+
+imageAvatar {
+  float: left;
+  background-size: cover;
+}
+
+.star-rating {
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+}
+
+.error {
+  color: #dc3545;
+  font-weight: 400;
+}
+
+#editC {
+  height: 38px !important;
+  margin-bottom: 0px;
+  margin-top: 10px;
+}
+
+#rating {
+  margin-top: 10px;
+}
+
+.btnAccept {
+  margin-top: 5px;
+  font-size: 14px;
+  font-family: inherit !important;
+  color: #385898 !important;
+  font-weight: 400;
+  background: transparent;
+}
+
+.btnAccept:hover {
+  text-decoration: underline !important;
+}
+
+.btnAccept:focus{
+  outline: white;
+}
+
+.btnCancel {
+  margin-top: 6px;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-family: inherit !important;
+  color: #385898 !important;
+  font-weight: 400;
+}
+
+.btnCancel:hover {
+  text-decoration: underline !important;
+}

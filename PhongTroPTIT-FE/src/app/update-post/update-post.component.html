@@ -1,0 +1,381 @@
+<app-nav-bar></app-nav-bar>
+<div class="space"></div>
+<!--<div class="container">-->
+<!--<mdb-breadcrumb>-->
+<!--<mdb-breadcrumb-item class="blue-text"><a routerLink="/trang-chu">Trang chủ</a></mdb-breadcrumb-item>-->
+<!--<mdb-breadcrumb-item class="active">Đăng tin</mdb-breadcrumb-item>-->
+<!--</mdb-breadcrumb>-->
+<!--</div>-->
+<app-notfound-page *ngIf="notFound"></app-notfound-page>
+<div class="container" *ngIf="postDTO.id && !notFound">
+  <div class="row">
+    <div class="col-xl-12 col-lg-12 col-sm-12">
+      <h2 id="dangtin">Cập nhật</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div *ngIf="innerWidth<768" class="col-lg-8 col-md-8 col-sm-12 col-12">
+      <p class="huongdan">HƯỚNG DẪN</p>
+      <div class="huongdandangtin">
+        <ul>
+          <li><strong>Nội dung phải viết bằng tiếng Việt có dấu.</strong></li>
+          <li><strong>Tiêu đề tin không dài quá 100 kí tự.</strong></li>
+          <li>Để tin đăng có hiệu quả hơn các bạn cần điền đầy đủ thông tin vào các mục.</li>
+          <li>Để tăng độ tin cậy và tin đăng được nhiều người quan tâm hơn, hãy sửa vị trí tin rao của bạn trên bản đồ
+            bằng cách kéo điểm đỏ tới đúng vị trí của tin rao.
+          </li>
+          <li>Tin đăng phải có ít nhất một hình ảnh rõ ràng.
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!--NgForm-->
+    <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-12">
+      <form (ngSubmit)="postForm.form.valid && onSubmit()" #postForm="ngForm">
+        <p class="basic-text">THÔNG TIN CƠ BẢN</p>
+        <div class="thongtincoban">
+          <p class="tieude">Tiêu đề</p>
+          <input type="text" class="form-control" id="title" required
+                 [(ngModel)]="postDTO.title" name="title" #title="ngModel"
+                 placeholder="Hãy đặt tiêu đề đầy đủ nghĩa, khách sẽ quan tâm hơn"
+                 [ngClass]="{ 'is-invalid': (title.invalid && (title.dirty || title.touched)) || (postForm.submitted && title.invalid)}">
+          <div *ngIf="(title.invalid && (title.dirty || title.touched)) || (postForm.submitted && title.invalid)"
+               class="error">
+            <p>Vui lòng nhập tiêu đề.</p>
+          </div>
+
+          <div class="row">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+              <p class="sdt">Tình trạng phòng</p>
+              <select class="browser-default custom-select" id="tinhTrang" required
+                      [(ngModel)]="status" name="tinhTrang"
+                      #tinhTrang="ngModel"
+                      [ngClass]="{ 'is-invalid': (tinhTrang.invalid && (tinhTrang.dirty || tinhTrang.touched)) || (postForm.submitted && tinhTrang.invalid)}">
+                <!--<option [ngValue]="undefined" selected>Chọn quận</option>-->
+                <option value='1'>Còn phòng</option>
+                <option value='2'>Hết phòng</option>
+              </select>
+              <!--<div-->
+              <!--*ngIf="(tinhTrang.invalid && (tinhTrang.dirty || tinhTrang.touched)) || (postForm.submitted && tinhTrang.invalid)"-->
+              <!--class="error">-->
+              <!--<p>Vui lòng chọn quận.</p>-->
+              <!--</div>-->
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+              <p class="loaiphong">Trạng thái</p>
+              <select class="browser-default custom-select" id="trangThai" required
+                      [(ngModel)]="del" name="trangThai"
+                      #trangThai="ngModel"
+                      [ngClass]="{ 'is-invalid': (trangThai.invalid && (trangThai.dirty || trangThai.touched)) || (postForm.submitted && trangThai.invalid)}">
+                <!--<option [ngValue]="undefined" selected>Chọn loại phòng</option>-->
+                <option value='1'>Ẩn tin đăng</option>
+                <option value='2'>Hiện tin đăng</option>
+              </select>
+              <!--<div *ngIf="(trangThai.invalid && (trangThai.dirty || trangThai.touched)) || (postForm.submitted && trangThai.invalid)"-->
+              <!--class="error">-->
+              <!--<p>Vui lòng chọn loại phòng.</p>-->
+              <!--</div>-->
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+              <!--[ngStyle]="{'margin-top': (price.invalid)?'10px':'0px'}"-->
+              <p class="sdt">Giá cho thuê</p>
+              <input appNumberOnly class="form-control" id="price" required
+                     [(ngModel)]="postDTO.accomodationDTO.price" name="price" #price="ngModel"
+                     placeholder="Giá cho thuê (VNĐ)"
+                     [ngClass]="{ 'is-invalid': (price.invalid && (price.dirty || price.touched)) || (postForm.submitted && price.invalid)}">
+              <div *ngIf="(price.invalid && (price.dirty || price.touched)) || (postForm.submitted && price.invalid)"
+                   class="error">
+                <p>Vui lòng nhập giá thuê.</p>
+              </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+              <p class="dientich">Diện tích</p>
+              <input appNumberOnly class="form-control" id="acreage" required
+                     [(ngModel)]="postDTO.accomodationDTO.acreage" name="acreage" #acreage="ngModel"
+                     placeholder="Diện tích (m²)"
+                     [ngClass]="{ 'is-invalid': (acreage.invalid && (acreage.dirty || acreage.touched)) || (postForm.submitted && acreage.invalid)}">
+              <div
+                *ngIf="(acreage.invalid && (acreage.dirty || acreage.touched)) || (postForm.submitted && acreage.invalid)"
+                class="error">
+                <p>Vui lòng nhập diện tích.</p>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+              <p class="sdt">Quận</p>
+              <select class="browser-default custom-select" id="district" required
+                      [(ngModel)]="postDTO.accomodationDTO.idDistrict" name="district"
+                      #district="ngModel"
+                      [ngClass]="{ 'is-invalid': (district.invalid && (district.dirty || district.touched)) || (postForm.submitted && district.invalid)}">
+                <option [ngValue]="undefined" selected>Chọn quận</option>
+                <option *ngFor="let districtDTO of districtDTOs" [value]=districtDTO.id
+                        ngDefaultControl>{{districtDTO.name}}</option>
+              </select>
+              <div
+                *ngIf="(district.invalid && (district.dirty || district.touched)) || (postForm.submitted && district.invalid)"
+                class="error">
+                <p>Vui lòng chọn quận.</p>
+              </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+              <p class="loaiphong">Loại phòng</p>
+              <select class="browser-default custom-select" id="type" required
+                      [(ngModel)]="motel" name="type"
+                      #type="ngModel"
+                      [ngClass]="{ 'is-invalid': (type.invalid && (type.dirty || type.touched)) || (postForm.submitted && type.invalid)}">
+                <option [ngValue]="undefined" selected>Chọn loại phòng</option>
+                <option value='1'>Phòng trọ, nhà trọ</option>
+                <option value='2'>Nhà nguyên căn</option>
+              </select>
+              <div *ngIf="(type.invalid && (type.dirty || type.touched)) || (postForm.submitted && type.invalid)"
+                   class="error">
+                <p>Vui lòng chọn loại phòng.</p>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+              <p class="diachi">Địa chỉ</p>
+              <input type="text" class="form-control" id="address" required
+                     [(ngModel)]="postDTO.accomodationDTO.address" name="address" #address="ngModel"
+                     placeholder="Nhập địa chỉ và kéo điểm màu đỏ tới vị trí chính xác"
+                     [ngClass]="{ 'is-invalid': (address.invalid && (address.dirty || address.touched)) || (postForm.submitted && address.invalid)}"
+                     (keyup)="updateLatLngFromAddress()">
+              <div
+                *ngIf="(address.invalid && (address.dirty || address.touched)) || (postForm.submitted && address.invalid)"
+                class="error">
+                <p>Vui lòng nhập địa chỉ.</p>
+              </div>
+              <div class="map">
+                <agm-map [latitude]="postDTO.accomodationDTO.xCoordinate || lat"
+                         [longitude]="postDTO.accomodationDTO.yCoordinate || lng" [zoom]="zoom"
+                         (mapClick)="mapClicked($event)">
+                  <agm-marker *ngIf="postDTO.accomodationDTO.xCoordinate && postDTO.accomodationDTO.yCoordinate"
+                              [markerDraggable]="true"
+                              (dragEnd)="markerDragEnd($event)"
+                              [latitude]="postDTO.accomodationDTO.xCoordinate"
+                              [longitude]="postDTO.accomodationDTO.yCoordinate"></agm-marker>
+                </agm-map>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="basic-text">THÔNG TIN BỔ SUNG</p>
+        <div class="thongtinbosung">
+          <div class="row">
+            <div [ngClass]="{'offBorder': innerWidth<992}" class="col-lg-6 col-sm-12 border-right">
+              <div class="row">
+                <div class="col-lg-12 col-sm-12">
+                  <p class="tieude">Vệ sinh</p>
+                  <select class="browser-default custom-select" id="toilet" required
+                          [(ngModel)]="postDTO.accomodationDTO.toilet" name="toilet"
+                          #toilet="ngModel"
+                          [ngClass]="{ 'is-invalid': (toilet.invalid && (toilet.dirty || toilet.touched)) || (postForm.submitted && toilet.invalid)}">
+                    <option [ngValue]="undefined" selected>Chọn..</option>
+                    <option value="KHEP_KIN">Khép kín</option>
+                    <option value="CHUNG">Chung</option>
+                    <option value="CHUA_XAC_DINH">Chưa xác định</option>
+                  </select>
+                  <div
+                    *ngIf="(toilet.invalid && (toilet.dirty || toilet.touched)) || (postForm.submitted && toilet.invalid)"
+                    class="error">
+                    <p>Vui lòng chọn loại nhà vệ sinh.</p>
+                  </div>
+                </div>
+                <div class="col-lg-12 col-sm-12">
+                  <p class="giadien">Giá điện</p>
+                  <input appNumberOnly class="form-control" id="electricPrice" required
+                         [(ngModel)]="postDTO.accomodationDTO.electricPrice" name="electricPrice"
+                         #electricPrice="ngModel"
+                         [ngClass]="{ 'is-invalid': (electricPrice.invalid && (electricPrice.dirty || electricPrice.touched)) || (postForm.submitted && electricPrice.invalid)}"
+                         placeholder="Giá điện(VNĐ/số)">
+                  <div class="price">
+                    <p>Mặc định "0" là giá nhà nước quy định.</p>
+                  </div>
+                  <div
+                    *ngIf="(electricPrice.invalid && (electricPrice.dirty || electricPrice.touched)) || (postForm.submitted && electricPrice.invalid)"
+                    class="error">
+                    <p>Vui lòng nhập giá tiền điện.</p>
+                  </div>
+                </div>
+                <div class="col-lg-12 col-sm-12">
+                  <p class="giadien">Giá nước</p>
+                  <input appNumberOnly class="form-control" id="waterPrice" required
+                         [(ngModel)]="postDTO.accomodationDTO.waterPrice" name="waterPrice"
+                         #waterPrice="ngModel"
+                         [ngClass]="{ 'is-invalid': (waterPrice.invalid && (waterPrice.dirty || waterPrice.touched)) || (postForm.submitted && waterPrice.invalid)}"
+                         placeholder="Giá nước(VNĐ/số)">
+                  <div class="price">
+                    <p>Mặc định "0" là giá nhà nước quy định.</p>
+                  </div>
+                  <div
+                    *ngIf="(waterPrice.invalid && (waterPrice.dirty || waterPrice.touched)) || (postForm.submitted && waterPrice.invalid)"
+                    class="error">
+                    <p>Vui lòng giá tiền nước.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-12">
+              <div class="row">
+                <div class="col-lg-12 col-sm-12">
+                  <p [ngStyle]="{'margin-top': innerWidth<992 ? '20px' : '0px'}" class="tieude">Tiện ích (Tùy chọn)</p>
+                  <div class="row">
+                    <div class="col-lg-6 col-sm-6">
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="parking"
+                               [(ngModel)]="postDTO.accomodationDTO.parking" id="parking">
+                        <label class="custom-control-label" for="parking">Chỗ để xe</label>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-6">
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="internet"
+                               [(ngModel)]="postDTO.accomodationDTO.internet" id="internet">
+                        <label class="custom-control-label" for="internet">Internet</label>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-6">
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="airconditioner"
+                               [(ngModel)]="postDTO.accomodationDTO.airConditioner" id="airconditioner">
+                        <label class="custom-control-label" for="airconditioner">Điều hòa</label>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-6">
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="cableTV"
+                               [(ngModel)]="postDTO.accomodationDTO.cableTV" id="cableTV">
+                        <label class="custom-control-label" for="cableTV">TH Cáp</label>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-6">
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="tv"
+                               [(ngModel)]="postDTO.accomodationDTO.tv" id="TV">
+                        <label class="custom-control-label" for="TV">Tivi</label>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-6">
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="heater"
+                               [(ngModel)]="postDTO.accomodationDTO.heater" id="heater">
+                        <label class="custom-control-label" for="heater">Bình nóng lạnh</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12 col-sm-12">
+              <p class="hinhanh">Hình ảnh</p>
+              <div class="input-default-wrapper">
+                <!--<input type="file" id="file-with-multi-file" class="input-default-js"-->
+                <!--data-multiple-target="{target} files selected" multiple accept='image/*'-->
+                <!--(change)="fileEvent($event)">-->
+                <input type="file" ng2FileSelect [uploader]="uploader" id="file-with-multi-file"
+                       class="input-default-js"
+                       data-multiple-target="{target} files selected" multiple accept='image/*'>
+                <label class="label-for-default-js rounded-right mb-3" for="file-with-multi-file"><span
+                  class="span-choose-file">Chọn 1 hoặc nhiều hình ảnh</span>
+                  <div class="float-right span-browse">Browse</div>
+                </label>
+              </div>
+              <div
+                *ngIf="(postForm.submitted && uploader.queue.length ==0)"
+                class="error">
+                <p>Vui lòng chọn ít nhất một hình ảnh.</p>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <!--<div class="col-lg-3 col-md-3 col-sm-6 col-6 mb-2" *ngFor="let url of urls">-->
+            <!--<img [src]="url">-->
+            <!--</div>-->
+            <div class="col-lg-3 col-md-3 col-sm-6 col-6 mb-2 mt-2 previewImage" *ngFor="let item of uploader.queue">
+              <img [src]="" appMediaPreview [image]="item?._file" class="media-object"/>
+              <button (click)="item.remove()"><i class="fas fa-times"></i></button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12 col-sm-12">
+              <p class="tieude">Mô tả chi tiết</p>
+              <angular-editor [(ngModel)]="postDTO.content" name="htmlContent" [config]="config"></angular-editor>
+            </div>
+          </div>
+        </div>
+        <div class="text-center cursor">
+          <button mdbBtn class="btn btnPost" mdbWavesEffect [disabled]="disableSubmit">
+            <span *ngIf="showLoadding" class="spinner-border spinner-border-sm"></span>
+            Cập nhật
+          </button>
+        </div>
+      </form>
+    </div>
+    <!--NgForm-->
+    <div *ngIf="innerWidth>=768" class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
+      <p class="huongdan">HƯỚNG DẪN</p>
+      <div class="huongdandangtin">
+        <ul>
+          <li><strong>Nội dung phải viết bằng tiếng Việt có dấu.</strong></li>
+          <li><strong>Tiêu đề tin không dài quá 100 kí tự.</strong></li>
+          <li>Để tin đăng có hiệu quả hơn các bạn cần điền đầy đủ thông tin vào các mục.</li>
+          <li>Để tăng độ tin cậy và tin đăng được nhiều người quan tâm hơn, hãy sửa vị trí tin rao của bạn trên bản đồ
+            bằng cách kéo điểm đỏ tới đúng vị trí của tin rao.
+          </li>
+          <li>Tin đăng phải có ít nhất một hình ảnh rõ ràng.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="space"></div>
+<app-footer *ngIf="(postDTO.id && !notFound) || notFound"></app-footer>
+
+<div class="modal fade" (click)="ClickedOut($event)" id="modalError" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel"
+     [ngClass]="{'show': showError}" aria-hidden="true">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold"><i class="fas fa-exclamation-circle" style="color: red;"></i> Lỗi
+        </h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="showError=false">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <p>Quá trình đăng bài viết đã có lỗi xảy ra. Vui lòng thử lại!</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalRequired" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel"
+     [ngClass]="{'show': showNoti}" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold"><i class="far fa-check-circle" style="color: #4cae4c;"></i> Thành
+          công
+        </h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" routerLink="/home"
+                (click)="showNoti = false;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3 text-center">
+        <p style="font-size: 20px; font-weight: 500;">Cập nhật tin đăng thành công.</p>
+        <p id="autoturnback">Tự động quay về trang trước sau 3s</p>
+      </div>
+    </div>
+  </div>
+</div>

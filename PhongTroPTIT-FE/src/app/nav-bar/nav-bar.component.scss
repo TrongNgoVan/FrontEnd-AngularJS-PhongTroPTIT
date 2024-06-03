@@ -1,0 +1,199 @@
+.navbar-brand {
+  font-weight: bold;
+  color: white;
+}
+
+
+.nav-color {
+  background: #2E3339 !important;
+}
+
+button {
+  margin-top: 5px;
+  background: white;
+  border: white 1px solid;
+  border-radius: 5px;
+  color: #003352;
+  font-weight: bold;
+}
+
+#user {
+  font-weight: 500;
+}
+
+.username, .pass, .display_name, .phone, .address, .email {
+  margin-bottom: 3px;
+  font-weight: 500;
+  margin-top: 5px;
+}
+
+.form-control {
+  height: 40px;
+  margin-bottom: 10px;
+}
+
+#form-password {
+  margin-bottom: 0px !important;
+}
+
+.modal-content {
+  overflow: hidden;
+}
+
+.footer-modal {
+  margin-bottom: 16px;
+}
+
+.btnLogin, .btnRegister {
+  background: #0db9f0;
+  border: none;
+  color: white;
+  font-size: 18px;
+  width: 100%;
+  padding: 10px 0;
+}
+
+.modal-content {
+  overflow-y: auto;
+}
+
+//.error {
+//  color: #a94442;
+//  font-weight: 500;
+//}
+
+.error {
+  color: #dc3545;
+  font-weight: 400;
+}
+
+.forgot, .already {
+  color: #0db9f0 !important;
+  font-weight: 400;
+  padding: 0 !important;
+  font-size: 15px;
+  margin-top: 0px;
+  margin-bottom: 5px;
+}
+
+.forgot:hover, .already:hover {
+  text-decoration: underline !important;
+}
+
+.forgot:focus, .already:focus {
+  outline: none;
+}
+
+#register {
+  color: #0db9f0 !important;
+  font-weight: 400;
+  padding: 0 !important;
+  font-size: 15px;
+  margin-top: 0px;
+  margin-bottom: 10px;
+}
+
+#register:hover {
+  text-decoration: underline !important;
+}
+
+#register:focus {
+  outline: none;
+}
+
+.register {
+  font-size: 15px;
+  margin-bottom: 0;
+}
+
+.already {
+  margin-top: 3px
+}
+
+#notification {
+  margin-left: 0px;
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+
+.btnSetting, .btnSeemore {
+  margin-top: 7px;
+  margin-right: 0px;
+  font-size: 14px;
+  font-family: inherit !important;
+  color: #385898 !important;
+  font-weight: 400;
+  background: transparent;
+}
+
+.btnSeemore {
+  font-weight: 500;
+  margin: 4px;
+}
+
+.btnSetting:hover, .btnSeemore:hover {
+  text-decoration: underline !important;
+}
+
+.avatar {
+  display: inline;
+  float: left;
+  border-radius: 50%;
+  margin-top: 10px;
+}
+
+#nothingNoti {
+  font-weight: 400;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+#avatarUser, #approve, #block, #avatarUserNull {
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+#imgPost {
+  margin-top: 10px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  width: 79.5px;
+  height: 50px;
+}
+
+.information {
+  margin-top: 10px;
+  width: auto;
+  display: inline;
+  padding: 5px 0px;
+}
+
+.name {
+  margin-top: 7px;
+  margin-bottom: 0px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.time {
+  margin: 0px;
+  font-size: 13px;
+  font-weight: 400;
+  color: #9498A0;
+}
+
+.more {
+  font-weight: 400;
+}
+
+#inf {
+  padding-bottom: 5px;
+}
+
+#inf:hover {
+  background-color: #F6F6F6 !important;
+}

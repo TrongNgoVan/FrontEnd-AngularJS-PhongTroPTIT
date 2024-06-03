@@ -1,0 +1,213 @@
+.space {
+  margin-top: 10px;
+}
+
+#dangtin {
+  font-weight: 600;
+}
+
+p.basic-text {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  background: #374B5F;
+  color: white;
+  padding: 10px 10px;
+  margin-bottom: 0px;
+}
+
+.thongtincoban {
+  border: 1px solid #cccccc;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+p.tieude {
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.offBorder {
+  border-right: none !important;
+}
+
+p.sdt, p.loaiphong, p.dientich, p.giadien {
+  margin-top: 20px;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+offMarginTop {
+  margin-top: 0px;
+}
+
+p.huongdan {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 20px;
+  background: #374B5F;
+  color: white;
+  padding: 10px 10px;
+  margin-bottom: 0px;
+}
+
+.huongdandangtin {
+  border: 1px solid #cccccc;
+  margin-bottom: 20px;
+}
+
+#address{
+  font-weight: 400;
+}
+
+ul {
+  padding-left: 30px;
+  padding-right: 20px;
+}
+
+ul li {
+  font-weight: 400;
+}
+
+strong {
+  font-weight: 500;
+}
+
+p.diachi {
+  font-weight: 500;
+  margin-bottom: 5px;
+  margin-top: 20px;
+}
+
+.thongtinbosung {
+  border: 1px solid #cccccc;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.custom-checkbox {
+  padding-bottom: 10px;
+}
+
+.custom-control-label {
+  font-weight: 400;
+}
+
+p.hinhanh {
+  margin-top: 20px;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+img {
+  width: 100%;
+}
+
+agm-map {
+  height: 300px;
+}
+
+.map {
+  margin-top: 20px;
+}
+
+.btnPost {
+  background: #0db9f0;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.col-lg-3 img {
+  height: 114px;
+}
+
+.error {
+  color: #a94442;
+  font-weight: 500;
+}
+
+.error p {
+  margin-top: 2px;
+  margin-bottom: 0px;
+  font-size: 15px;
+}
+
+.price p {
+  margin-top: 2px;
+  margin-bottom: 0px;
+  font-size: 15px;
+  color: #ccc;
+}
+
+button:disabled,
+button[disabled] {
+  border: 1px solid #0db9f0;
+  background-color: #cccccc;
+  color: #666666;
+  cursor: not-allowed;
+  pointer-events: all !important;
+  opacity: 0.65;
+}
+
+button:disabled:hover {
+  background: #0db9f0;
+  color: white;
+}
+
+.is-invalid {
+  background-image: none;
+}
+
+.previewImage {
+  position: relative;
+}
+
+.previewImage button {
+  position: absolute;
+  right: 2%;
+  top: 12%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  background-color: #555;
+  color: white;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.previewImage button:hover {
+  background: white;
+  color: orangered;
+}
+
+.modal-content {
+  overflow: hidden;
+}
+
+.footer-modal {
+  margin-bottom: 16px;
+}
+
+.footer-modal {
+  margin-bottom: 16px;
+}
+
+.modal.show {
+  background: rgba(0, 0, 0, 0.6);
+  display: block;
+}
+
+#turnback {
+  color: blue;
+  font-size: 15px;
+}
+
+#turnback:hover {
+  color: orangered;
+}
+
+#autoturnback {
+  font-size: 15px;
+  font-weight: 400;
+}

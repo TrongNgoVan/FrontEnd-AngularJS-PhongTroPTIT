@@ -1,0 +1,146 @@
+<app-nav-bar></app-nav-bar>
+<div class="space"></div>
+<app-notfound-page *ngIf="notFound; else notError"></app-notfound-page>
+<ng-template #notError>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 bc">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="/home">Trang chủ</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Nhà nguyên căn</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <app-search></app-search>
+  <div class="space"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="text-center head">
+          <p id="news">Nhà nguyên căn</p>
+        </div>
+        <div class="text-right">
+          <select class="browser-default custom-select sort" style="width: 180px; margin-top: -32px;" [(ngModel)]="sort"
+                  (change)="getHousePost()">
+            <option value="5" selected>Mới nhất</option>
+            <option value="1">Giá thấp - cao</option>
+            <option value="2">Giá cao - thấp</option>
+            <option value="3">Diện tích thấp - cao</option>
+            <option value="4">Diện tích cao - thấp</option>
+          </select>
+        </div>
+        <hr>
+      </div>
+    </div>
+  </div>
+  <div class="space"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="text-center" *ngIf="!postDTOs">
+          <div class="sk-fading-circle">
+            <div class="sk-circle1 sk-circle"></div>
+            <div class="sk-circle2 sk-circle"></div>
+            <div class="sk-circle3 sk-circle"></div>
+            <div class="sk-circle4 sk-circle"></div>
+            <div class="sk-circle5 sk-circle"></div>
+            <div class="sk-circle6 sk-circle"></div>
+            <div class="sk-circle7 sk-circle"></div>
+            <div class="sk-circle8 sk-circle"></div>
+            <div class="sk-circle9 sk-circle"></div>
+            <div class="sk-circle10 sk-circle"></div>
+            <div class="sk-circle11 sk-circle"></div>
+            <div class="sk-circle12 sk-circle"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" *ngIf="postDTOs">
+        <div class="row bor"
+             *ngFor="let postDTO of postDTOs | paginate: { id: 'server', itemsPerPage: 10, currentPage: page, totalItems: totalElements }">
+          <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
+            <div class="view overlay">
+              <img src="{{postDTO.imageStrings[0] || 'assets/default-img.jpg'}}" height="200px"
+                   alt="Card image cap">
+              <a>
+                <div class="mask rgba-white-slight" (click)="navigateToDetail(postDTO)"></div>
+              </a>
+            </div>
+          </div>
+          <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-12">
+            <div [ngStyle]="{'margin-bottom': innerWidth<1200 ?'-5px':'0'}">
+              <a (click)="navigateToDetail(postDTO)" class="title">{{postDTO.title}}</a>
+            </div>
+            <p class="address" [ngStyle]="{'margin-bottom': innerWidth<1200 ?'5px':'10px'}">Địa chỉ: <span
+              class="address-content">{{postDTO.accomodationDTO.address}}</span></p>
+            <div class="row">
+              <div class="col-xl-5 col-lg-5 col-md-5 col-sm-6 col-6">
+                <p class="acreage" [ngStyle]="{'margin-bottom': innerWidth<1200 ?'5px':'10px'}">Diện tích: <span
+                  class="acreage-content">{{postDTO.accomodationDTO.acreage}} m²</span></p>
+              </div>
+              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-6">
+                <p class="type" [ngStyle]="{'margin-bottom': innerWidth<1200 ?'5px':'10px'}">Loại: <span
+                  class="type-content"> Nhà nguyên căn</span></p>
+              </div>
+              <div *ngIf="innerWidth>=768" class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-6">
+                <div class="text-right">
+                  <p class="time"
+                     [ngStyle]="{'margin-bottom': innerWidth<1200 ?'5px':'10px'}">{{postDTO.createAt | date:'dd/MM/yyyy'}}</p>
+                </div>
+              </div>
+              <div class="col-xl-5 col-lg-5 col-md-5 col-sm-6 col-6">
+                <p class="price" [ngStyle]="{'margin-bottom': innerWidth<1200 ?'5px':'10px'}">Giá: <span
+                  class="price-content">{{postDTO.accomodationDTO.price | number}} VNĐ/tháng</span></p>
+              </div>
+
+              <div class="col-xl-7 col-lg-7 col-md-7 col-sm-6 col-6">
+                <p class="status" *ngIf="postDTO.accomodationDTO.status"
+                   [ngStyle]="{'margin-bottom': innerWidth<1200 ?'5px':'10px'}">Tình trạng: <span
+                  class="status-content-con">Còn phòng</span></p>
+                <p class="status" *ngIf="!postDTO.accomodationDTO.status"
+                   [ngStyle]="{'margin-bottom': innerWidth<1200 ?'5px':'10px'}">Tình trạng: <span
+                  class="status-content">Hết phòng</span></p>
+              </div>
+
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <p class="util">Tiện ích:
+                  <span *ngIf="postDTO.accomodationDTO.toilet === KHEP_KIN"><i class="fas fa-toilet"
+                                                                               data-toggle="tooltip"
+                                                                               data-placement="bottom"
+                                                                               title="Toilet riêng"></i></span>
+                  <span *ngIf="postDTO.accomodationDTO.parking"><i class="fas fa-parking" data-toggle="tooltip"
+                                                                   data-placement="bottom"
+                                                                   title="Chỗ đậu xe"></i></span>
+                  <span *ngIf="postDTO.accomodationDTO.internet"><i class="fas fa-wifi" data-toggle="tooltip"
+                                                                    data-placement="bottom" title="Wifi"> </i> </span>
+                  <span *ngIf="postDTO.accomodationDTO.airConditioner"><i class="fas fa-snowflake" data-toggle="tooltip"
+                                                                          data-placement="bottom" title="Điều hòa"> </i> </span>
+                  <span *ngIf="postDTO.accomodationDTO.tv"><i class="fas fa-tv" data-toggle="tooltip"
+                                                              data-placement="bottom" title="Tivi"> </i> </span>
+                  <span *ngIf="postDTO.accomodationDTO.heater"><i class="fas fa-shower" data-toggle="tooltip"
+                                                                  data-placement="bottom"
+                                                                  title="Máy nước nóng"></i> </span>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="border-bottom"></div>
+          </div>
+        </div>
+        <div class="text-center">
+          <pagination-controls (pageChange)="getPage($event)" id="server"
+                               autoHide="true"
+                               responsive="true"
+                               previousLabel=""
+                               nextLabel="">
+            
+          </pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<app-footer *ngIf="postDTOs || !postDTOs || notFound"></app-footer>

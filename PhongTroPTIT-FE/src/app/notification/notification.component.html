@@ -1,0 +1,235 @@
+<div class="allButFooter">
+  <app-nav-bar></app-nav-bar>
+  <div class="space"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="/home">Trang chủ</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Quản lý thông báo</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <div class="container" *ngIf="notificationDTOs && criteriaDTOS">
+    <div class="row">
+      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <button mdbWavesEffect id="btnCreateCriteria" (click)="openCreateCriteria()"><i class="fas fa-plus"></i> Thêm
+          tiêu
+          chí
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="space"></div>
+  <div class="container" *ngIf="notificationDTOs && criteriaDTOS" style="min-height: 100%;">
+    <div class="row">
+      <!--Left-->
+      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 criteria">
+          <div class="row">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+              <p id="tieuchi">Tiêu chí</p>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+              <div class="d-flex justify-content-end">
+                <div class="custom-control custom-checkbox" style="margin-top:3px;">
+                  <input type="checkbox" class="custom-control-input" [(ngModel)]="all"
+                         (ngModelChange)="getCriteria()" id="showAll" [disabled]="disabledCheckbox">
+                  <label class="custom-control-label all" for="showAll">Hiện tất cả</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="criteria-content margin-bottom">
+          <mat-accordion>
+            <mat-expansion-panel (opened)="panelOpenState = true; getNotificationByEmailAndCriteria(criteria.id)"
+                                 (closed)="panelOpenState = false"
+                                 *ngFor="let criteria of criteriaDTOS | paginate: { id: 'second', itemsPerPage: 10, currentPage: pageCriteria, totalItems: totalElementCriteria};
+                                let i=index">
+              <mat-expansion-panel-header [collapsedHeight]="'70px'" [expandedHeight]="'70px'"
+                                          [ngClass]="{'border-bottom': (panelOpenState)}">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                  <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                      Quận: {{criteria.districtDTO.name}}
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                      Loại: <span *ngIf="criteria.motel">Phòng trọ</span>
+                      <span *ngIf="!criteria.motel">Nhà nguyên căn</span>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                      Giá thuê: {{criteria.priceStart / 1000000}} - {{criteria.priceEnd / 1000000}} triệu
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                      Diện tích: {{criteria.acreageStart}} - {{criteria.acreageEnd}} m²
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                      <p class="time">Khởi tạo: {{criteria.createAt | date: 'dd/MM/yyyy HH:mm'}}</p>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                      <div class="custom-control custom-checkbox" (click)="$event.stopPropagation()">
+                        <input type="checkbox" class="custom-control-input" name="checkbox-list"
+                               [(ngModel)]="criteria.stop" (ngModelChange)="stopCriteria(criteria.id, criteria.stop)"
+                               id="{{i}}" ngDefaultControl [disabled]="disabledCheckboxStop"
+                               style="padding-right: 5px;">
+                        <label class="custom-control-label labelCheckbox" for="{{i}}">Dừng nhận thông báo</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </mat-expansion-panel-header>
+              <div class="text-center">
+                <span *ngIf="showLoadding" class="spinner-border spinner-border-sm"></span>
+              </div>
+              <p class="noidung" *ngIf="totalElementSubNoti === 0">Không có thông báo</p>
+              <a style="padding: 0px!important;"
+                 *ngFor="let subNotificationDTO of subNotificationDTOS | paginate: { id: 'third', itemsPerPage: 10, currentPage: pageSubNoti, totalItems: totalElementSubNoti}"
+                 (click)="navigateToDetail(subNotificationDTO.postDTO); seen(subNotificationDTO);">
+                <div id="inf" class="row border-bottom" *ngIf="totalElementSubNoti > 0"
+                     [ngStyle]="{'background-color': (subNotificationDTO.seen)?'#FFFFFF':'#EDF2FA'}">
+                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="avatar">
+                      <img id="avatarUser" *ngIf="subNotificationDTO.postDTO.userDTO.b64"
+                           [src]="'data:image;base64,' + subNotificationDTO.postDTO.userDTO.b64 | appSafeHtml">
+                      <img id="avatarUser1" *ngIf="!subNotificationDTO.postDTO.userDTO.b64"
+                           src="assets/avatar.svg">
+                    </div>
+                    <div class="information">
+                      <div class="row">
+                        <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
+                          <p id="name">{{subNotificationDTO.postDTO.userDTO.fullName}}
+                            <span id="more"> đăng một tin mới </span>
+                            {{subNotificationDTO.postDTO.title | truncate:[70]}}
+                          </p>
+                          <p class="time"
+                             *ngIf="subNotificationDTO.unit === 'phút'">{{subNotificationDTO.createAt}} {{subNotificationDTO.unit}}
+                            trước</p>
+                          <p class="time"
+                             *ngIf="subNotificationDTO.unit === 'giờ'">{{subNotificationDTO.createAt}} {{subNotificationDTO.unit}}
+                            trước</p>
+                          <p class="time"
+                             *ngIf="subNotificationDTO.unit === 'ngày'">{{subNotificationDTO.createAt}} {{subNotificationDTO.unit}}
+                            trước</p>
+                          <p class="time"
+                             *ngIf="subNotificationDTO.unit === 'tháng'">{{subNotificationDTO.createAt}} {{subNotificationDTO.unit}}
+                            trước</p>
+                          <p class="time"
+                             *ngIf="subNotificationDTO.unit === 'năm'">{{subNotificationDTO.createAt}} {{subNotificationDTO.unit}}
+                            trước</p>
+                        </div>
+                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+                          <img id="imgPost" [src]="subNotificationDTO.postDTO.imageStrings[0]">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <div class="text-center" style="margin-top: 10px;">
+                <pagination-controls (pageChange)="getPageSubNoti($event)" id="third"
+                                     autoHide="true"
+                                     responsive="true"
+                                     previousLabel=""
+                                     nextLabel="">
+                </pagination-controls>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+          <div class="text-center" style="margin-top: 10px;">
+            <pagination-controls (pageChange)="getPageCriteria($event)" id="second"
+                                 autoHide="true"
+                                 responsive="true"
+                                 previousLabel=""
+                                 nextLabel="">
+            </pagination-controls>
+          </div>
+        </div>
+      </div>
+      <!--Left-->
+      <!--Right-->
+      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+        <div class="notification">
+          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">Thông báo
+          </div>
+        </div>
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 margin-bottom">
+          <a style="padding: 0px!important;"
+             *ngFor="let notificationDTO of notificationDTOs | paginate: { id: 'first', itemsPerPage: 10, currentPage: pageNoti, totalItems: totalElementNoti }"
+             (click)="navigateToDetail(notificationDTO.postDTO); seen(notificationDTO);">
+            <div id="noti" class="row border-bottom border-left border-right"
+                 [ngStyle]="{'background-color': (notificationDTO.seen)?'#FFFFFF':'#EDF2FA'}">
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="avatar">
+                  <img id="avatarUserPost" *ngIf="notificationDTO.notificationName === notiName.NOTIFICATION &&  notificationDTO.postDTO.userDTO.b64"
+                       [src]="'data:image;base64,' + notificationDTO.postDTO.userDTO.b64 | appSafeHtml">
+                  <img id="avatarUserNull" *ngIf="notificationDTO.notificationName === notiName.NOTIFICATION && !notificationDTO.postDTO.userDTO.b64"
+                       [src]="'assets/avatar.svg'">
+                  <img id="approve" *ngIf="notificationDTO.notificationName === notiName.APPROVE"
+                       [src]="'assets/success.png'">
+                  <img id="block" *ngIf="notificationDTO.notificationName === notiName.BLOCK"
+                       [src]="'assets/cancel.png'">
+                </div>
+                <div class="information">
+                  <div class="row">
+                    <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
+                      <div *ngIf="notificationDTO.notificationName === notiName.NOTIFICATION">
+                        <p class="namePost">{{notificationDTO.postDTO.userDTO.fullName}}
+                          <span class="morePost"> đăng một tin mới </span>
+                          {{notificationDTO.postDTO.title | truncate:[60]}}
+                        </p>
+                      </div>
+                      <div *ngIf="notificationDTO.notificationName === notiName.APPROVE">
+                        <p class="namePost">Kiểm duyệt viên
+                          <span class="morePost"> đã duyệt </span>
+                          {{notificationDTO.postDTO.title | truncate:[70]}}
+                        </p>
+                      </div>
+                      <div *ngIf="notificationDTO.notificationName === notiName.BLOCK">
+                        <p class="namePost">Kiểm duyệt viên
+                          <span class="morePost"> đã khóa </span>
+                          {{notificationDTO.postDTO.title | truncate:[70]}}
+                        </p>
+                      </div>
+                      <p class="time"
+                         *ngIf="notificationDTO.unit === 'phút'">{{notificationDTO.createAt}} {{notificationDTO.unit}}
+                        trước</p>
+                      <p class="time"
+                         *ngIf="notificationDTO.unit === 'giờ'">{{notificationDTO.createAt}} {{notificationDTO.unit}}
+                        trước</p>
+                      <p class="time"
+                         *ngIf="notificationDTO.unit === 'ngày'">{{notificationDTO.createAt}} {{notificationDTO.unit}}
+                        trước</p>
+                      <p class="time"
+                         *ngIf="notificationDTO.unit === 'tháng'">{{notificationDTO.createAt}} {{notificationDTO.unit}}
+                        trước</p>
+                      <p class="time"
+                         *ngIf="notificationDTO.unit === 'năm'">{{notificationDTO.createAt}} {{notificationDTO.unit}}
+                        trước</p>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+                      <img id="img" [src]="notificationDTO.postDTO.imageStrings[0]">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+          <div class="text-center" style="margin-top: 10px;">
+            <pagination-controls (pageChange)="getPageNoti($event)" id="first"
+                                 autoHide="true"
+                                 responsive="true"
+                                 previousLabel=""
+                                 nextLabel="">
+            </pagination-controls>
+          </div>
+        </div>
+      </div>
+      <!--Right-->
+    </div>
+  </div>
+</div>
+<app-footer *ngIf="notificationDTOs && criteriaDTOS"></app-footer>

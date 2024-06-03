@@ -1,0 +1,338 @@
+<app-nav-bar></app-nav-bar>
+<div class="space"></div>
+<app-notfound-page *ngIf="notFound"></app-notfound-page>
+<div class="container" *ngIf="postDTO.id && !notFound">
+  <div class="col-lg-12 bc">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/home">Trang chủ</a></li>
+        <li class="breadcrumb-item" *ngIf="postDTO.accomodationDTO.motel"><a [routerLink]="['/motel']"
+                                                                             [queryParams]="{page: 1}">Phòng trọ</a>
+        </li>
+        <li class="breadcrumb-item" *ngIf="!postDTO.accomodationDTO.motel"><a [routerLink]="['/house']"
+                                                                              [queryParams]="{page: 1}">Nhà nguyên
+          căn</a></li>
+      </ol>
+    </nav>
+  </div>
+</div>
+<div class="container" *ngIf="postDTO.id && !notFound">
+  <div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+      <div class="text-left" style="display: inline-block">
+        <h3 id="tenbaiviet">{{postDTO.title}}</h3>
+      </div>
+      <div class="text-right" style="display: inline; float: right;" *ngIf="postDTO.userDTO.email === auth.email">
+        <button [disabled]="(!postDTO.approved && !postDTO.notApproved)" id="btnUpdate"
+                (click)="navigateToUpdate(postDTO.id)">Cập nhật
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container" *ngIf="postDTO.id && !notFound">
+  <div class="row">
+    <div class="col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12">
+      <div class="post-summary">
+        <!--Địa chỉ-->
+        <div class="row padding">
+          <div class="col-xl-2 col-lg-2 col-md-2 col-sm-3 col-4 background-color">
+            <p id="diachi">Địa chỉ</p>
+          </div>
+          <div class="col-xl-10 col-lg-10 col-md-10 col-sm-9 col-8 content">
+            <p id="chitietdiachi">{{postDTO.accomodationDTO.address}}</p>
+          </div>
+        </div>
+        <!--Địa chỉ-->
+        <!--Diện tích, Giá thuê-->
+        <div class="row padding">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+            <div class="row">
+              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-3 col-4 background-color">
+                <p id="dientich">Diện tích</p>
+              </div>
+              <div class="col-xl-8 col-lg-8 col-md-8 col-sm-9 col-8 content">
+                <p id="chitietdientich">{{postDTO.accomodationDTO.acreage}} m²</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+            <div class="row">
+              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-3 col-4 background-color">
+                <p id="giatien">Giá thuê</p>
+              </div>
+              <div class="col-xl-8 col-lg-8 col-md-8 col-sm-9 col-8 content">
+                <p id="chitietgiatien">{{postDTO.accomodationDTO.price | number}} VNĐ/tháng</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--Diện tích, Giá thuê-->
+        <!--Toilet, Status-->
+        <div class="row padding">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+            <div class="row">
+              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-3 col-4 background-color">
+                <p id="toilet">Vệ sinh</p>
+              </div>
+              <div class="col-xl-8 col-lg-8 col-md-8 col-sm-9 col-8 content">
+                <p id="chitiettoilet" *ngIf="postDTO.accomodationDTO.toilet === ToiletName.KHEP_KIN">Khép kín</p>
+                <p id="chitiettoilet1" *ngIf="postDTO.accomodationDTO.toilet === ToiletName.CHUNG">Chung</p>
+                <p id="chitiettoilet2" *ngIf="postDTO.accomodationDTO.toilet === ToiletName.CHUA_XAC_DINH">Chưa xác
+                  định</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+            <div class="row">
+              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-3 col-4 background-color">
+                <p id="status">Tình trạng</p>
+              </div>
+              <div class="col-xl-8 col-lg-8 col-md-8 col-sm-9 col-8 content">
+                <p *ngIf="postDTO.accomodationDTO.status" id="chitietstatus">Còn phòng</p>
+                <p *ngIf="!postDTO.accomodationDTO.status" id="chitietstatus2">Hết phòng</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--Toilet, Status-->
+        <!--Giá điện, giá nước-->
+        <div class="row padding">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+            <div class="row">
+              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-3 col-4 background-color">
+                <p id="giadien">Giá điện</p>
+              </div>
+              <div class="col-xl-8 col-lg-8 col-md-8 col-sm-9 col-8 content">
+                <p *ngIf="postDTO.accomodationDTO.electricPrice != 0"
+                   id="chitietgiadien">{{postDTO.accomodationDTO.electricPrice}} VNĐ/số</p>
+                <p *ngIf="postDTO.accomodationDTO.electricPrice == 0" id="chitietgiadien2">Nhà nước quy định</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+            <div class="row">
+              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-3 col-4 background-color">
+                <p id="gianuoc">Giá nước</p>
+              </div>
+              <div class="col-xl-8 col-lg-8 col-md-8 col-sm-9 col-8 content">
+                <p *ngIf="postDTO.accomodationDTO.waterPrice != 0"
+                   id="chitietgianuoc">{{postDTO.accomodationDTO.waterPrice}} VNĐ/số</p>
+                <p *ngIf="postDTO.accomodationDTO.waterPrice == 0" id="chitietgianuoc2">Nhà nước quy định</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--Giá điện, giá nước-->
+        <!--Cập nhật, Motel-->
+        <div class="row padding">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+            <div class="row">
+              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-3 col-4 background-color">
+                <p id="capnhat">Cập nhật</p>
+              </div>
+              <div class="col-xl-8 col-lg-8 col-md-8 col-sm-9 col-8 content">
+                <p id="chitietcapnhat">{{postDTO.lastUpdate | date: 'dd/MM/yyy'}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+            <div class="row">
+              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-3 col-4 background-color">
+                <p id="motel">Loại phòng</p>
+              </div>
+              <div class="col-xl-8 col-lg-8 col-md-8 col-sm-9 col-8 content">
+                <p *ngIf="postDTO.accomodationDTO.motel" id="chitietmotel">Phòng trọ, nhà trọ</p>
+                <p *ngIf="!postDTO.accomodationDTO.motel" id="chitietmotel2">Nhà nguyên căn</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--Cập nhật, motel-->
+        <!--Tiện ích-->
+        <div class="row padding">
+          <div class="col-xl-2 col-lg-2 col-md-2 col-sm-3 col-4 tienich">
+            <p id="tienich">Tiện ích</p>
+          </div>
+          <div class="col-xl-10 col-lg-10 col-md-10 col-sm-9 col-8 tienich-content">
+            <p id="chitiettienich">{{util}}</p>
+          </div>
+        </div>
+        <!--Địa chỉ-->
+      </div>
+    </div>
+    <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
+      <div class="thongtinlienlac">
+        <h4 id="thongtinlienlac">Thông tin liên lạc</h4>
+        <a><i class="fas fa-user"></i><span id="hoten"
+                                            (click)="navigateToUser(postDTO.userDTO.id)"> {{postDTO.userDTO.fullName}}</span></a>
+        <p id="address"><i class="fas fa-map-marker-alt"></i> {{postDTO.userDTO.address}}
+        </p>
+        <p id="sdt"><i class="fas fa-mobile-alt"></i> {{postDTO.userDTO.phone}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container" *ngIf="postDTO.id && !notFound">
+  <div class="row">
+    <div class="col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12">
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+          <div class="hinhanh">
+            <h4 id="hinhanh">Hình ảnh</h4>
+          </div>
+          <div class="chitiethinhanh" *ngIf="postDTO.imageStrings">
+            <mdb-carousel class="carousel slide carousel-fade" [animation]="'fade'">
+              <mdb-carousel-item *ngFor="let imageString of postDTO.imageStrings">
+                <div class="view w-100">
+                  <img class="d-block w-100" name="listImg" [src]=imageString height="500px">
+                  <div class="mask rgba-black-light waves-light" mdbWavesEffect></div>
+                </div>
+              </mdb-carousel-item>
+            </mdb-carousel>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+          <div class="thongtinchitiet">
+            <h4 id="thongtinchitiet">Thông tin chi tiết</h4>
+          </div>
+          <div class="thongtinchitiet-content" [innerHTML]="postDTO.content">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+          <div class="map">
+            <h4 id="map">Bản đồ</h4>
+          </div>
+          <div class="chitietmap">
+            <agm-map [latitude]="postDTO.accomodationDTO.xCoordinate"
+                     [longitude]="postDTO.accomodationDTO.yCoordinate"
+                     [zoom]=zoom
+                     [disableDefaultUI]="false"
+                     [zoomControl]="false">
+              <agm-marker [latitude]="postDTO.accomodationDTO.xCoordinate"
+                          [longitude]="postDTO.accomodationDTO.yCoordinate"></agm-marker>
+            </agm-map>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container" *ngIf="postDTO.id && commentDTOs && !notFound">
+  <div class="row">
+    <div class="col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12">
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+          <div class="binhluan">
+            <h4 id="binhluan">Bình luận</h4>
+          </div>
+          <div class="binhluan-content">
+            <form (ngSubmit)="bl.form.valid && createComment(bl)" #bl="ngForm" *ngIf="auth.id">
+              <p class="error" *ngIf="(bl.submitted && comment.invalid) || errorRate">Vui lòng nhập bình luận và đánh
+                giá</p>
+              <textarea class="form-control" name="comment" id="comment" #comment="ngModel" cols="85" rows="4" required
+                        placeholder="Vui lòng nhập nội dung bình luận" [(ngModel)]="commentDTO.content"></textarea>
+              <div class="d-flex justify-content-end">
+                <star-rating [starType]="'svg'" (starClickChange)="onRatingChange($event)" [staticColor]="'ok'"
+                             [rating]="commentDTO.rate" speed="slow" [hoverEnabled]="true"
+                             labelText="Đánh giá: "></star-rating>
+              </div>
+              <div class="text-right">
+                <button class="btnPost" [disabled]="disableSubmit" mdbWavesEffect>Gửi</button>
+              </div>
+              <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                  <div class="border-bottom" style="margin-bottom: 10px;"></div>
+                </div>
+              </div>
+            </form>
+            <p class="noidung" *ngIf="totalElements === 0">Chưa có bình luận nào</p>
+            <div class="text-content"
+                 *ngFor="let commentDTO of commentDTOs | paginate: { id: 'server', itemsPerPage: 10, currentPage: page, totalItems: totalElements }">
+              <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                  <div class="avatar">
+                    <a [routerLink]="['/user']" [queryParams]="{id: commentDTO.userDTO.id}"><img id="avatarUser"
+                                                                                                 [src]="commentDTO.userDTO.b64 | appSafeHtml"></a>
+                  </div>
+                  <div class="name">
+                    <div class="row">
+                      <div class="col-xl-10 col-lg-10 col-md-10 col-sm-10 col-10">
+                        <a class="ten" [routerLink]="['/user']"
+                           [queryParams]="{id: commentDTO.userDTO.id}">{{commentDTO.userDTO.fullName}}</a>
+                      </div><!--<i class="fas fa-ellipsis-h"></i>-->
+                      <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2"
+                           *ngIf="auth.email === commentDTO.userDTO.email">
+                        <div class="d-flex justify-content-end">
+                          <div class="btn-group" mdbDropdown>
+                            <button mdbDropdownToggle type="button" class="nav-link waves-light"
+                                    mdbWavesEffect style="padding: 0px;">
+                              <i class="fas fa-ellipsis-h"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-primary"
+                                 [ngClass]="{'dropdown-menu-right': innerWidth<1200}">
+                              <a class="dropdown-item" (click)="change(commentDTO)">Chỉnh sửa</a>
+                              <a class="dropdown-item" (click)="delComment(commentDTO.id)">Xóa</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="d-flex justify-content-start">
+                          <star-rating [readOnly]="!(idCommentEdit === commentDTO.id)" [staticColor]="'ok'"
+                                       [starType]="'svg'" (starClickChange)="onRatingChange($event)"
+                                       [rating]="commentDTO.rate"></star-rating>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <p class="noidung" *ngIf="(commentDTO.id !== idCommentEdit)">{{commentDTO.content}}</p>
+              <form (ngSubmit)="edit.form.valid && editComment(commentDTO)" #edit="ngForm"
+                    *ngIf="commentDTO.id === idCommentEdit">
+                <textarea class="form-control" id="editC" name="editC" #editC="ngModel" required
+                          placeholder="Vui lòng nhập nội dung bình luận" cols="1"
+                          [(ngModel)]="commentDTO.content"></textarea>
+                <div class="row">
+                  <div class="col-xl-11 col-lg-11 col-md-11 col-sm-11 col-11">
+                    <div class="d-flex justify-content-end">
+                      <button class="btnAccept" *ngIf="commentDTO.content != ''">Chấp nhận</button>
+                  </div>
+                  </div>
+                  <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1">
+                    <div class="d-flex justify-content-end">
+                      <a class="btnCancel" (click)="discardChange()">Hủy</a>
+                    </div>
+                  </div>
+                </div>
+              </form>
+              <p class="gio"
+                 *ngIf="idCommentEdit !== commentDTO.id">{{commentDTO.lastUpdate | date:'d/M/yyyy, h:mm'}}</p>
+              <div class="border-bottom" style="margin-bottom: 10px;"></div>
+            </div>
+            <!--Phân trang-->
+            <div class="text-center">
+              <pagination-controls (pageChange)="getPage($event)" id="server"
+                                   autoHide="true"
+                                   responsive="true"
+                                   previousLabel=""
+                                   nextLabel="">
+              </pagination-controls>
+            </div>
+            <!--Phân trang-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer *ngIf="notFound || (postDTO.id && commentDTOs && !notFound)"></app-footer>

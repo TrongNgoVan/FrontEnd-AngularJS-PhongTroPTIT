@@ -1,0 +1,138 @@
+<div class="allButFooter">
+  <app-nav-bar></app-nav-bar>
+  <div class="space"></div>
+  <app-notfound-page *ngIf="notFound"></app-notfound-page>
+  <div class="container" *ngIf="user && !notFound">
+    <div class="row">
+      <div class="col-lg-12">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="/home">Trang chủ</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Trang cá nhân {{user.fullName}}</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <div class="container" *ngIf="user && !notFound">
+    <div class="row">
+      <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
+        <p class="thongtin">Thông tin</p>
+        <div class="thongtin-content">
+          <div class="text-center">
+            <img [src]="urlAvatar | appSafeHtml" width="157px" height="157px" id="avatar">
+          </div>
+          <div class="thongtin-chitiet">
+            <p class="attribute">Email: {{user.email}}</p>
+            <p class="attribute">Họ tên: {{user.fullName}}</p>
+            <p class="attribute">Số điện thoại: {{user.phone}}</p>
+            <p class="attribute">Địa chỉ: {{user.address}}</p>
+            <div class="row" *ngIf="auth">
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                <button *ngIf="auth.id === user.id" id="btnUpdate" (click)="openModalUpdateUser()">Cập nhật</button>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                <div class="text-right">
+                  <button *ngIf="auth.id === user.id" id="btnChangePass" (click)="openModalChangePass()">Đổi mật khẩu
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-12"
+           [ngStyle]="{'margin-top': innerWidth<992?'10px': '0px'}">
+        <p class="thongtin">Tin đăng</p>
+        <div class="row">
+          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="text-center" *ngIf="!postDTOs">
+              <div class="sk-fading-circle">
+                <div class="sk-circle1 sk-circle"></div>
+                <div class="sk-circle2 sk-circle"></div>
+                <div class="sk-circle3 sk-circle"></div>
+                <div class="sk-circle4 sk-circle"></div>
+                <div class="sk-circle5 sk-circle"></div>
+                <div class="sk-circle6 sk-circle"></div>
+                <div class="sk-circle7 sk-circle"></div>
+                <div class="sk-circle8 sk-circle"></div>
+                <div class="sk-circle9 sk-circle"></div>
+                <div class="sk-circle10 sk-circle"></div>
+                <div class="sk-circle11 sk-circle"></div>
+                <div class="sk-circle12 sk-circle"></div>
+              </div>
+            </div>
+            <div class="border-thongtin" *ngIf="postDTOs">
+              <div class="row bor"
+                   *ngFor="let postDTO of postDTOs | paginate: { id: 'server', itemsPerPage: 10, currentPage: page, totalItems: totalElements }">
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-4 col-4">
+                  <div class="view overlay">
+                    <img
+                      [ngClass]="{'img-1': innerWidth>=1200, 'img-2': innerWidth<1200, 'img-3': innerWidth<992, 'img-4': innerWidth<576}"
+                      src={{postDTO.imageStrings[0]}} width="150px" height="150px">
+                    <a>
+                      <div class="mask rgba-white-slight" (click)="navigateToDetail(postDTO)"></div>
+                    </a>
+                  </div>
+                </div>
+                <div class="col-xl-9 col-lg-9 col-md-9 col-sm-8 col-8">
+                  <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                      <div class="row">
+                        <a class="title" (click)="navigateToDetail(postDTO)">{{postDTO.title}}</a>
+                      </div>
+                      <div class="row">
+                        <p class="giatien">Giá thuê: {{postDTO.accomodationDTO.price | number}} VNĐ</p>
+                      </div>
+                      <div class="row">
+                        <p class="diachi">Địa chỉ: {{postDTO.accomodationDTO.address | truncate:[62]}}</p>
+                      </div>
+                      <div class="row">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                          <div class="row" style="width: 100%!important;">
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                              <div class="row">
+                                <p class="ngay">Ngày đăng: {{postDTO.createAt | date:'dd/MM/yyyy'}}</p>
+                              </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                              <p class="trangThai" *ngIf="postDTO.approved && !postDTO.del">Trạng thái: <span
+                                id="tagApproved">Đã duyệt</span></p>
+                              <p class="trangThai" *ngIf="postDTO.notApproved">Trạng thái: <span
+                                id="tagNotApproved">Đã khóa</span></p>
+                              <p class="trangThai" *ngIf="!postDTO.approved && !postDTO.notApproved">Trạng thái: <span
+                                id="tagPending">Chờ duyệt</span></p>
+                              <p class="trangThai" *ngIf="postDTO.del">Trạng thái: <span id="tagHide">Đang ẩn</span></p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" *ngIf="auth">
+                        <div class="text-right">
+                          <button *ngIf="auth.email === user.email"
+                                  [disabled]="postDTO.notApproved || (!postDTO.approved && !postDTO.notApproved)"
+                                  id="btnUpdatePost" (click)="navigateToUpdate(postDTO.id)">Cập nhật
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <p id="emptyPost" *ngIf="totalElements === 0">Chưa có tin đăng</p>
+              <div class="text-center">
+                <pagination-controls (pageChange)="getPage($event)" id="server"
+                                     autoHide="true"
+                                     responsive="true"
+                                     previousLabel=""
+                                     nextLabel=""></pagination-controls>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="space"></div>
+</div>
+<app-footer *ngIf="postDTOs"></app-footer>
