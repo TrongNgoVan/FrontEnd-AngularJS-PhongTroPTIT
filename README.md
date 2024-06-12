@@ -48,7 +48,7 @@ Website được phát triển bằng Spring Boot và Angular.
 -  Visual Studio Code (hoặc IDE khác hỗ trợ Angular)
 - MySQL Workbench
 - IntelliJ IDEA (hoặc IDE khác hỗ trợ Spring Boot)
-- 
+- Postman: Để kiểm tra và thử nghiệm API.
 ### Khởi tạo dự án Angular
 
 1. Truy cập [Angular CLI](https://cli.angular.io/) để cài đặt Angular Command Line Interface (CLI), một công cụ giúp tạo và quản lý dự án Angular.
@@ -98,8 +98,16 @@ Website được phát triển bằng Spring Boot và Angular.
     npm install
     ng serve
     ```
-
-4. **Khởi động ứng dụng**
+4. **Sử dụng Postman để kiểm tra API**
+   
+  - Mở Postman và tạo một Collection mới để quản lý các request.
+  - Tạo các request mới với phương thức (GET, POST, PUT, DELETE) tương ứng với API .
+  - Nhập URL của API (ví dụ: http://localhost:8080/api/endpoint).
+  - Thêm các headers cần thiết (nếu có).
+  - Với các request POST hoặc PUT, thêm body (thường ở định dạng JSON).
+  - Nhấn "Send" và kiểm tra phản hồi từ server để xác nhận API hoạt động đúng.
+    
+5. **Khởi động ứng dụng**
 
       -  Bật trình duyệt, gõ `http://localhost:8080` để vào trang dành cho người dùng hoặc `http://localhost:8080/admin` để vào trang quản lý.
 
